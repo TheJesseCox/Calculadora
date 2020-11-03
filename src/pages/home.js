@@ -1,25 +1,23 @@
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import {useState} from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 
-export default function App() {
-  const buttons = 
-  [
-    
-     1, 2, 3, '/', 
-     4, 5, 6, '*', 
-     7, 8, 9, '-',
-     '.' ,0,
-     '=','+','CLEAR' , 'DEL'
-     
-  ]  
+
+
+export function AAA() {
+  const buttons = ['CLEAR', 'DEL', '%',
+   1, 2, 3,
+   4, 5, 6,
+   7, 8, 9,
+   0,'+',
+   '/', '.','-' , '=']  
 
   const [primeiroNumero, setPrimeiroNumero] = useState("")
-
   const [ultimoNumero, setUltimoNumero] = useState("")
 
 
-  function calcular(){
+  function calculadora(){
     const splitNumbers = primeiroNumero.split(' ')
     const PrimeiroNumero = parseFloat(splitNumbers[0])
     const UltimoNumero = parseFloat(splitNumbers[2])
@@ -30,18 +28,19 @@ export default function App() {
         setPrimeiroNumero((PrimeiroNumero + UltimoNumero).toString())
         return
       case '-': 
-        setPrimeiroNumero((PrimeiroNumero - UltimoNumero).toString())
+      setPrimeiroNumero((primeiroNumero - UltimoNumero).toString())
         return
       case '*':
         setPrimeiroNumero((PrimeiroNumero * UltimoNumero).toString())
         return
       case '/': 
-        setPrimeiroNumero((PrimeiroNumero / UltimoNumero).toString())
+        ssetPrimeiroNumero((PrimeiroNumero / UltimoNumero).toString())
         return
     }
   }
 
   function handleInput(buttonPressed){
+    console.log(buttonPressed)
     if(buttonPressed === '+' | buttonPressed === "-" | buttonPressed === "*" | buttonPressed === "/" ){
       setPrimeiroNumero(primeiroNumero + " " + buttonPressed + " ")
       return
@@ -56,53 +55,62 @@ export default function App() {
         return
       case '=':
         setUltimoNumero(primeiroNumero + " = ")
-        calcular()
+        calculadora()
         return
       case '+/-':
         return
     }
+
     setPrimeiroNumero(primeiroNumero + buttonPressed)
   }
 
   const styles = StyleSheet.create({
     results: {
-      backgroundColor: "#ccffff",//OUTPUT PARTE DE DENTRO #f5f5f5
+      backgroundColor: "#f5f5f5",
       width: '100%',
-      minHeight: 228,
+      minHeight: 280,
       alignItems: 'flex-end',
-      justifyContent: 'flex-end',
-      borderRadius:29,
-      marginVertical:10
+      justifyContent: 'flex-end'
     },
     resultText: {
-      color: "black",//COR DO RESULTADO
+      color: "black",
       margin: 10,
-      fontSize: 96
+      fontSize: 40
     },
 
     historyText:{
-      color:"#006666", //historico grey
+      color:"#0f0f0f",
       fontSize: 20,
       marginRight: 10,
       alignSelf: 'flex-end',
+    },
+    themeButton: {
+      alignSelf: 'flex-start',
+      bottom: 120,
+      margin: 10,
+      backgroundColor: "#e5e5e5",
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+      
     },
     buttons: {
       flexDirection: 'row',
       flexWrap: 'wrap',
     },
     button: {
-      borderColor: "#b3ffff", //CIRCUMFERENCIA DOS BOTOES #fefe
+      borderColor: "#fafafafa",
       borderWidth: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      minWidth:100, 
-      minHeight: 100,
+      minWidth: 90, 
+      minHeight: 90,
       flex: 2,
-      borderRadius:30,
-      elevation:0.7,
     },
     textButton: {
-      color: "#009999", //DIGITO DOS BOTOES
+      color: "#0f0f0f",
       fontSize: 20,
     }, 
   });
@@ -110,14 +118,15 @@ export default function App() {
   return (
     <View>
       <View style={styles.results}>
-        <Text style={[styles.textButton, {color: "#008080", fontSize: 30, alignSelf:'flex-start', marginLeft:10, fontStyle:'italic'}]}>CALCULADORA HEAVEN</Text>
+        <TouchableOpacity style={styles.themeButton}>
+        </TouchableOpacity>
         <Text style={styles.historyText}>{ultimoNumero}</Text>
         <Text style={styles.resultText}>{primeiroNumero}</Text>
       </View>
       <View style={styles.buttons}>
         {buttons.map((button) => 
           button === '=' ?
-        <TouchableOpacity onPress={() => handleInput(button)} key={button} style={[styles.button, {backgroundColor: '#ccffff'}]}>
+        <TouchableOpacity onPress={() => handleInput(button)} key={button} style={[styles.button, {backgroundColor: '#fafafafa'}]}>
           <Text style={[styles.textButton, {color: "black", fontSize: 30}]}>{button}</Text>
         </TouchableOpacity>
           :
